@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillProof | Student Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            color: #a5b4fc;
+        }
+
+        .logout-btn {
+            background: #4f46e5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #3730a3;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(120deg, #312e81, #4f46e5);
+            color: white;
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: #e0e7ff;
+            line-height: 1.7;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: #172554;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card,
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(15,23,42,0.05);
+        }
+
+        .info-card h3 {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #172554;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card h3 {
+            color: #312e81;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 7px 12px;
+            background: #e0e7ff;
+            color: #3730a3;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .action-btn {
+            display: inline-block;
+            margin-top: 18px;
+            margin-right: 8px;
+            padding: 12px 18px;
+            background: #4338ca;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background: #312e81;
+        }
+
+        .activity-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(15,23,42,0.05);
+        }
+
+        .activity-card h3 {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .activity-card p {
+            color: #172554;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        /* PORTFOLIO PRIVACY SECTION */
+
+        .portfolio-card {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(15,23,42,0.05);
+        }
+
+        .portfolio-card h3 {
+            color: #312e81;
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .portfolio-card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .privacy-status {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .public-status {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .private-status {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .portfolio-link-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .portfolio-link-box input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            color: #334155;
+            background: #f8fafc;
+        }
+
+        .enable-btn {
+            background: #15803d;
+        }
+
+        .enable-btn:hover {
+            background: #166534;
+        }
+
+        .disable-btn {
+            background: #dc2626;
+        }
+
+        .disable-btn:hover {
+            background: #991b1b;
+        }
+
+        .copy-btn {
+            background: #4338ca;
+        }
+
+        .message {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media(max-width:750px) {
+            .profile-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+
+            .portfolio-link-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <div class="brand">
+        Skill<span>Proof.</span>
+    </div>
+
+    <a href="{% url 'student_logout' %}" class="logout-btn">
+        Logout
+    </a>
+
+</nav>
+
+
+<div class="main-container">
+
+    <!-- WELCOME SECTION -->
+
+    <section class="welcome-section">
+
+        <h1>
+            Welcome, {{ profile.full_name }}! 👋
+        </h1>
+
+        <p>
+            Welcome to your SkillProof student dashboard.
+            Track your skills, complete practical challenges
+            and build your verified portfolio.
+        </p>
+
+    </section>
+
+
+    <!-- STUDENT PROFILE -->
+
+    <h2 class="section-title">
+        Your Student Profile
+    </h2>
+
+    <div class="profile-grid">
+
+        <div class="info-card">
+            <h3>Full Name</h3>
+            <p>{{ profile.full_name }}</p>
+        </div>
+
+        <div class="info-card">
+            <h3>College Name</h3>
+            <p>{{ profile.college_name }}</p>
+        </div>
+
+        <div class="info-card">
+            <h3>Department</h3>
+            <p>{{ profile.get_department_display }}</p>
+        </div>
+
+        <div class="info-card">
+            <h3>Graduation Year</h3>
+            <p>{{ profile.graduation_year }}</p>
+        </div>
+
+    </div>
+
+
+    <!-- PORTFOLIO PRIVACY CONTROL -->
+
+    <h2 class="section-title">
+        Your Public Portfolio
+    </h2>
+
+    <div class="portfolio-card">
+
+        <h3>Recruiter Portfolio Settings</h3>
+
+        <p>
+            Control whether recruiters can view your verified
+            projects, technical challenges and achievements.
+            Your portfolio is private by default.
+        </p>
+
+
+        {% if profile.is_public %}
+
+            <span class="privacy-status public-status">
+                ✓ PUBLIC PORTFOLIO ENABLED
+            </span>
+
+            <p>
+                Your portfolio is now accessible to anyone
+                who has your portfolio link.
+            </p>
+
+            <div class="portfolio-link-box">
+
+                <input
+                    type="text"
+                    id="portfolioLink"
+                    value="{{ request.scheme }}://{{ request.get_host }}{% url 'public_student_portfolio' profile.user.username %}"
+                    readonly
+                >
+
+                <button
+                    type="button"
+                    class="action-btn copy-btn"
+                    onclick="copyPortfolioLink()"
+                >
+                    Copy Link
+                </button>
+
+            </div>
+
+            <p id="copyMessage" class="message"></p>
+
+            <form method="POST" action="{% url 'portfolio_settings' %}">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="action" value="disable">
+
+                <button type="submit" class="action-btn disable-btn">
+                    Make Portfolio Private
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <span class="privacy-status private-status">
+                🔒 PRIVATE PORTFOLIO
+            </span>
+
+            <p>
+                Your portfolio is currently private.
+                Recruiters cannot view your portfolio.
+                Enable public access when you are ready to share it.
+            </p>
+
+            <form method="POST" action="{% url 'portfolio_settings' %}">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="action" value="enable">
+
+                <button type="submit" class="action-btn enable-btn">
+                    Enable Public Portfolio
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- SKILL DEVELOPMENT -->
+
+    <h2 class="section-title">
+        Your Skill Development
+    </h2>
+
+    <div class="feature-grid">
+
+        <!-- PRACTICAL CHALLENGES -->
+
+        <div class="feature-card">
+
+            <h3>Practical Challenges</h3>
+
+            <p>
+                Explore programming and technical tasks.
+                Solve real-world problems and demonstrate
+                your abilities.
+            </p>
+
+            <span class="status">
+                {{ total_challenges }} Available Challenges
+            </span>
+
+            <br>
+
+            <a href="{% url 'challenge_list' %}" class="action-btn">
+                View Challenges →
+            </a>
+
+        </div>
+
+
+        <!-- PROJECT EVIDENCE -->
+
+        <div class="feature-card">
+
+            <h3>Project Evidence</h3>
+
+            <p>
+                Upload your projects, PDF reports,
+                screenshots and GitHub repository links.
+            </p>
+
+            <a href="{% url 'upload_project' %}" class="action-btn">
+                Upload Project →
+            </a>
+
+            <a href="{% url 'my_projects' %}" class="action-btn">
+                My Projects →
+            </a>
+
+        </div>
+
+
+        <!-- SKILL FINGERPRINT -->
+
+        <div class="feature-card">
+
+            <h3>Skill Fingerprint</h3>
+
+            <p>
+                Discover your strengths, check your
+                technical performance and identify
+                areas where you can improve.
+            </p>
+
+            <a href="{% url 'skill_fingerprint' %}" class="action-btn">
+                View Skill Fingerprint →
+            </a>
+
+        </div>
+
+
+        <!-- MENTOR VERIFICATION -->
+
+        <div class="feature-card">
+
+            <h3>Mentor Verification</h3>
+
+            <p>
+                Track your challenge submissions,
+                scores and mentor feedback.
+            </p>
+
+            <span class="status">
+                Available
+            </span>
+
+        </div>
+
+
+        <!-- SKILL GROWTH TIMELINE -->
+
+        <div class="feature-card">
+
+            <h3>Skill Growth Timeline</h3>
+
+            <p>
+                View your evaluated scores and understand
+                your technical improvement over time.
+            </p>
+
+            <a href="{% url 'skill_growth_timeline' %}" class="action-btn">
+                View Growth Timeline →
+            </a>
+
+        </div>
+
+
+        <!-- SKILL GAP ANALYSIS -->
+
+        <div class="feature-card">
+
+            <h3>Skill Gap Analysis</h3>
+
+            <p>
+                Identify your strong and weak technical skills,
+                understand areas that need improvement and
+                discover challenges recommended for your growth.
+            </p>
+
+            <a href="{% url 'skill_gap_analysis' %}" class="action-btn">
+                Analyse My Skills →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- STUDENT ACTIVITY -->
+
+    <h2 class="section-title" style="margin-top:30px;">
+        Your Activity
+    </h2>
+
+    <div class="activity-card">
+
+        <h3>Total Challenge Submissions</h3>
+
+        <p>{{ total_submissions }}</p>
+
+    </div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+    SkillProof – Beyond Certificates, Prove Your Skills.
+</footer>
+
+
+<!-- COPY PORTFOLIO LINK SCRIPT -->
+
+<script>
+
+    function copyPortfolioLink() {
+
+        const linkInput = document.getElementById('portfolioLink');
+        const message = document.getElementById('copyMessage');
+
+        navigator.clipboard.writeText(linkInput.value)
+            .then(function() {
+                message.textContent = 'Portfolio link copied successfully!';
+            })
+            .catch(function() {
+                linkInput.select();
+                document.execCommand('copy');
+                message.textContent = 'Portfolio link copied!';
+            });
+
+    }
+
+</script>
+
+</body>
+</html>

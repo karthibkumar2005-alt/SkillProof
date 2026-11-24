@@ -1,0 +1,33 @@
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# Django database
+db.sqlite3
+db.sqlite3-journal
+
+# Uploaded files
+media/
+
+# Secret files
+.env
+.env.*
+
+# PyCharm settings
+.idea/
+
+# VS Code settings
+.vscode/
+
+# Log files
+*.log
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/

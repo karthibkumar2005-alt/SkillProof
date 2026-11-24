@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillProof | Skill Challenges</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .navbar {
+            background: #172554;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .brand span {
+            color: #a5b4fc;
+        }
+
+        .back-btn {
+            background: #4f46e5;
+            color: white;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            color: #172554;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .challenge-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(15,23,42,0.05);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 18px;
+        }
+
+        .challenge-card h2 {
+            color: #172554;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .difficulty {
+            margin-top: 18px;
+            color: #475569;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .view-btn {
+            display: block;
+            margin-top: 18px;
+            padding: 12px;
+            background: #4338ca;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .view-btn:hover {
+            background: #312e81;
+        }
+
+        .empty-message {
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 12px;
+            color: #64748b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media(max-width: 850px) {
+            .challenge-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 550px) {
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="brand">Skill<span>Proof.</span></div>
+
+    <a href="{% url 'student_dashboard' %}" class="back-btn">
+        Back to Dashboard
+    </a>
+</nav>
+
+<div class="container">
+
+    <div class="heading">
+        <h1>Practical Skill Challenges</h1>
+        <p>
+            Test your knowledge, solve practical problems
+            and prove your technical skills.
+        </p>
+    </div>
+
+    {% if challenges %}
+
+        <div class="challenge-grid">
+
+            {% for challenge in challenges %}
+
+                <div class="challenge-card">
+
+                    <span class="category">
+                        {{ challenge.get_category_display }}
+                    </span>
+
+                    <h2>{{ challenge.title }}</h2>
+
+                    <p class="description">
+                        {{ challenge.description|truncatewords:25 }}
+                    </p>
+
+                    <p class="difficulty">
+                        Difficulty: {{ challenge.get_difficulty_display }}
+                    </p>
+
+                    <a
+                        href="{% url 'challenge_detail' challenge.id %}"
+                        class="view-btn"
+                    >
+                        View Challenge →
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-message">
+            <h2>No Challenges Available</h2>
+            <p>New practical challenges will be added soon.</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+    SkillProof – Beyond Certificates, Prove Your Skills.
+</footer>
+
+</body>
+</html>

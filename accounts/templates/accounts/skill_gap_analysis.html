@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Gap Analysis | SkillProof</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            color: #20243a;
+        }
+
+        nav {
+            background: #292b83;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            font-size: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #3436a0, #6255dc);
+            color: white;
+            padding: 35px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            line-height: 1.7;
+        }
+
+        /* OVERALL SUMMARY */
+
+        .summary-heading {
+            color: #292b83;
+            margin-bottom: 18px;
+            font-size: 23px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px 15px;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-top: 4px solid #6255dc;
+        }
+
+        .summary-card h3 {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .summary-card strong {
+            font-size: 30px;
+            color: #292b83;
+        }
+
+        .summary-card.strong-card {
+            border-top-color: #168348;
+        }
+
+        .summary-card.developing-card {
+            border-top-color: #e0a126;
+        }
+
+        .summary-card.improvement-card {
+            border-top-color: #dc4545;
+        }
+
+        .summary-card.not-assessed-card {
+            border-top-color: #8991a5;
+        }
+
+        /* SKILL CARDS */
+
+        .skill-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .skill-header h2 {
+            color: #292b83;
+            font-size: 22px;
+        }
+
+        .score {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .strong {
+            background: #d8f5e4;
+            color: #168348;
+        }
+
+        .developing {
+            background: #fff0c9;
+            color: #a36b00;
+        }
+
+        .needs-improvement {
+            background: #ffe0e0;
+            color: #c03939;
+        }
+
+        .not-assessed {
+            background: #e8eaf0;
+            color: #626779;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: #e9ebf3;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4c4fd0, #8176f0);
+            border-radius: 20px;
+        }
+
+        .recommendation {
+            background: #f0f1ff;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .recommendation strong {
+            color: #3436a0;
+        }
+
+        .challenge-list {
+            margin-top: 12px;
+        }
+
+        .challenge-item {
+            border: 1px solid #e5e7f0;
+            padding: 13px;
+            border-radius: 9px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .challenge-item a {
+            color: #4546bd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .challenge-item a:hover {
+            text-decoration: underline;
+        }
+
+        .empty {
+            color: #777;
+            margin-top: 12px;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #3436a0;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .summary-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .skill-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .challenge-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>SkillProof</h2>
+    <a href="{% url 'student_dashboard' %}">Back to Dashboard</a>
+</nav>
+
+<div class="container">
+
+    <!-- PAGE INTRODUCTION -->
+
+    <section class="hero">
+        <h1>Student Skill Gap Analysis</h1>
+        <p>
+            Understand your current technical skills, identify areas
+            that need improvement, and discover challenges to improve
+            your practical knowledge.
+        </p>
+    </section>
+
+
+    <!-- OVERALL SKILL SUMMARY -->
+
+    <h2 class="summary-heading">Overall Skill Summary</h2>
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <h3>Total Skills</h3>
+            <strong>{{ total_skills }}</strong>
+        </div>
+
+        <div class="summary-card strong-card">
+            <h3>Strong Skills</h3>
+            <strong>{{ strong_count }}</strong>
+        </div>
+
+        <div class="summary-card developing-card">
+            <h3>Developing Skills</h3>
+            <strong>{{ developing_count }}</strong>
+        </div>
+
+        <div class="summary-card improvement-card">
+            <h3>Needs Improvement</h3>
+            <strong>{{ improvement_count }}</strong>
+        </div>
+
+        <div class="summary-card not-assessed-card">
+            <h3>Not Assessed</h3>
+            <strong>{{ not_assessed_count }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- INDIVIDUAL SKILL ANALYSIS -->
+
+    <h2 style="margin-bottom: 20px; color: #292b83;">
+        Your Skill Analysis
+    </h2>
+
+    {% for skill in skill_analysis %}
+
+    <div class="skill-card">
+
+        <div class="skill-header">
+
+            <h2>{{ skill.skill_name }}</h2>
+
+            {% if skill.average_score != None %}
+                <span class="score">
+                    {{ skill.average_score }} / 100
+                </span>
+            {% else %}
+                <span class="score">Not scored</span>
+            {% endif %}
+
+        </div>
+
+
+        <!-- SKILL STATUS -->
+
+        {% if skill.status == 'Strong' %}
+
+            <span class="status strong">Strong</span>
+
+        {% elif skill.status == 'Developing' %}
+
+            <span class="status developing">Developing</span>
+
+        {% elif skill.status == 'Needs Improvement' %}
+
+            <span class="status needs-improvement">
+                Needs Improvement
+            </span>
+
+        {% else %}
+
+            <span class="status not-assessed">
+                Not Assessed
+            </span>
+
+        {% endif %}
+
+
+        <!-- PROGRESS BAR -->
+
+        <div class="progress-track">
+
+            <div class="progress-fill"
+                 style="width: {% if skill.average_score != None %}{{ skill.average_score }}{% else %}0{% endif %}%;">
+            </div>
+
+        </div>
+
+
+        <p>
+            <strong>Verified Challenges:</strong>
+            {{ skill.verified_count }}
+        </p>
+
+
+        <!-- RECOMMENDATION -->
+
+        <div class="recommendation">
+
+            <strong>Recommendation:</strong>
+            {{ skill.recommendation }}
+
+        </div>
+
+
+        <!-- RECOMMENDED CHALLENGES -->
+
+        <h3>Recommended Challenges</h3>
+
+        <div class="challenge-list">
+
+            {% for challenge in skill.recommended_challenges %}
+
+                <div class="challenge-item">
+
+                    <span>
+                        {{ challenge.title }} -
+                        {{ challenge.get_difficulty_display }}
+                    </span>
+
+                    <a href="{% url 'challenge_detail' challenge.id %}">
+                        View Challenge
+                    </a>
+
+                </div>
+
+            {% empty %}
+
+                <p class="empty">
+                    No active challenges are available for this skill yet.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'student_dashboard' %}" class="back-button">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
