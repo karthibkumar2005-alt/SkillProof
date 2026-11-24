@@ -1,36 +1,29 @@
 
-"""
-Django settings for SkillProof project.
-"""
-
 import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+import dj_database_url
 
-
-# BASE DIRECTORY
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# LOAD ENVIRONMENT VARIABLES
 load_dotenv(BASE_DIR / '.env')
 
+# Security
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-local-development-key'
+)
 
-# SECURITY SETTINGS
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DEBUG = 'RENDER' not in os.environ
 
-if not SECRET_KEY:
-    raise ValueError(
-        "DJANGO_SECRET_KEY is missing. Please check your .env file."
-    )
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-DEBUG = True
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-ALLOWED_HOSTS = []
-
-
-# APPLICATIONS
+# Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,15 +31,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # SkillProof application
     'accounts',
 ]
 
-
-# MIDDLEWARE
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,12 +46,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# URL CONFIGURATION
 ROOT_URLCONF = 'config.urls'
 
-
-# TEMPLATE CONFIGURATION
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -76,21 +63,17 @@ TEMPLATES = [
     },
 ]
 
-
-# WSGI CONFIGURATION
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
-# DATABASE CONFIGURATION
+# Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
 }
 
-
-# PASSWORD VALIDATION
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -106,30 +89,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# LANGUAGE AND TIME
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Kolkata'
-
 USE_I18N = True
-
 USE_TZ = True
 
+# Static files
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# STATIC FILES
-STATIC_URL = 'static/'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
-
-# MEDIA FILES
+# Media files
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 
-
-# EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
-# DEFAULT PRIMARY KEY
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
